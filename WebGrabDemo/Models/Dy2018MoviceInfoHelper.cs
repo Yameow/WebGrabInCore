@@ -22,7 +22,7 @@ namespace WebGrabDemo.Models
         {
             try
             {
-                var movieHTML = RequestHelper.HttpGet(onlineURL, Encoding.UTF8);
+                var movieHTML = RequestHelper.HttpGet(onlineURL, Encoding.GetEncoding("GB2312"));
                 if (string.IsNullOrEmpty(movieHTML))
                     return null;
                 var movieDoc = htmlParser.Parse(movieHTML);

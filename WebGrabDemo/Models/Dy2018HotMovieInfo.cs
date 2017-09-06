@@ -28,7 +28,7 @@ namespace WebGrabDemo.Models
                 try
                 {
                     LogHelper.Info("CrawlHotMovie Start...");
-                    var htmlDoc = RequestHelper.HttpGet("http://www.dy2018.com/", Encoding.UTF8);
+                    var htmlDoc = RequestHelper.HttpGet("http://www.dy2018.com/", Encoding.GetEncoding("GB2312"));
                     var dom = htmlParser.Parse(htmlDoc);
                     var lstDivInfo = dom.QuerySelectorAll("div.co_content222");
                     if (lstDivInfo != null)

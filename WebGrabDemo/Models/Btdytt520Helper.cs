@@ -15,7 +15,7 @@ namespace WebGrabDemo.Models
 
         public static MovieInfo GetMovieInfoByOnlineURL(string onlineURL, bool isContainIntro = false)
         {
-            var html = RequestHelper.HttpGet(onlineURL,Encoding.UTF8);
+            var html = RequestHelper.HttpGet(onlineURL, Encoding.GetEncoding("GB2312"));
             if (string.IsNullOrEmpty(html))
                 return null;
             var htmlDom = htmlParser.Parse(html);

@@ -26,7 +26,7 @@ namespace WebGrabDemo.Models
                     for (int index = 1; index <= endIndex; index++)
                     {
                         var indexURL = $"http://www.btdytt520.com/hotclick/p_{index}.html";
-                        var html = RequestHelper.HttpGet(indexURL, Encoding.UTF8);
+                        var html = RequestHelper.HttpGet(indexURL, Encoding.GetEncoding("GB2312"));
                         if (string.IsNullOrEmpty(html))
                             return;
                         var htmlDom = htmlParser.Parse(html);
