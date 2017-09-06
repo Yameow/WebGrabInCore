@@ -37,7 +37,6 @@ namespace WebGrabDemo.Common
         public static string HttpGet(string url, Encoding encoding, bool exceptionBackToUpper = true, int timeOut = 20000)
         {
             WebResponse response = null;
-            StreamReader reader = null;
             WebRequest request = null;
             string html = string.Empty;
             try
@@ -49,9 +48,11 @@ namespace WebGrabDemo.Common
 
                 var task = request.GetResponseAsync();
                 WebResponse wResp = task.Result;
-                //Stream respStream = wResp.GetResponseStream();
-                reader = GetStreamReader(encoding, wResp);
-                html = reader.ReadToEnd();
+                var respStream = wResp.GetResponseStream();
+                using (StreamReader reader = new StreamReader(respStream, encoding))
+                {
+                    html =  reader.ReadToEnd();
+                }
                 return html;
             }
             catch (Exception ex)
@@ -63,10 +64,6 @@ namespace WebGrabDemo.Common
             }
             finally
             {
-                if (reader != null)
-                {
-                    reader.Dispose();
-                }
                 if (response != null)
                 {
                     response.Dispose();
@@ -449,31 +446,5 @@ namespace WebGrabDemo.Common
 
         #endregion
 
-        #region Private Method
-
-        private static StreamReader GetStreamReader(Encoding encoding, WebResponse response)
-        {
-            var contentEncoding = response.Headers.AllKeys;/// ("Content-Encoding");
-            if (contentEncoding != null && contentEncoding[0].Equals("gzip"))
-            {
-                Stream stream = null;
-                if (contentEncoding[0].ToLower().Equals("gzip"))
-                {
-                    stream = new GZipStream(response.GetResponseStream(), CompressionMode.Decompress);
-                }
-                else if (contentEncoding[0].ToLower().Equals("deflate"))
-                {
-                    stream = new DeflateStream(response.GetResponseStream(), CompressionMode.Decompress);
-                }
-
-                return new StreamReader(stream, encoding);
-            }
-            else
-            {
-                return new StreamReader(response.GetResponseStream(), encoding);
-            }
-        }
-
-        #endregion
     }
 }

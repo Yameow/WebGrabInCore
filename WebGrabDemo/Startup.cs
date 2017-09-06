@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using WebGrabDemo.Common;
+using System.IO;
+using NLog.Web;
 
 namespace WebGrabDemo
 {
@@ -36,8 +39,9 @@ namespace WebGrabDemo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            env.ConfigureNLog(Path.Combine(env.WebRootPath, "nlog.config"));
+
+            app.UseTimedJob();
 
             if (env.IsDevelopment())
             {
@@ -59,6 +63,8 @@ namespace WebGrabDemo
             });
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            GlobalConfig.WWWRootPath = env.WebRootPath;
+
         }
     }
 }

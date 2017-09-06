@@ -62,7 +62,7 @@ namespace WebGrabDemo.Models
         private static void FillMovieFromOnline(string indexURL)
         {
 
-            var htmlDoc = RequestHelper.HttpGet(indexURL,Encoding.UTF8);
+            var htmlDoc = RequestHelper.HttpGet(indexURL, Encoding.GetEncoding("GB2312"));
             var dom = htmlParser.Parse(htmlDoc);
             var lstDivInfo = dom.QuerySelectorAll("div.co_content8");
             if (lstDivInfo != null)
