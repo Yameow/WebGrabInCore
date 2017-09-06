@@ -12,7 +12,7 @@ namespace WebGrabDemo.Models
     public class Btdytt520HotClickHelper
     {
 
-        private static MovieInfoHelper hotMoviceHelper = new MovieInfoHelper(Path.Combine(ConstsConf.WWWRootPath, "btdytt520HotClick.json"));
+        private static MovieInfoHelper hotMoviceHelper = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "btdytt520HotClick.json"));
 
         private static HtmlParser htmlParser = new HtmlParser();
 

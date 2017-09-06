@@ -14,7 +14,7 @@ namespace WebGrabDemo.Models
     /// </summary>
     public class HotMovieInfo
     {
-        private static MovieInfoHelper hotMovieList = new MovieInfoHelper(Path.Combine(ConstsConf.WWWRootPath, "hotMovie.json"));
+        private static MovieInfoHelper hotMovieList = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "hotMovie.json"));
 
         private static HtmlParser htmlParser = new HtmlParser();
         

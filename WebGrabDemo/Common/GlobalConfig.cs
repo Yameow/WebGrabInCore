@@ -11,5 +11,6 @@ namespace WebGrabDemo.Common
     /// </summary>
     public class GlobalConfig
     {
+        public static string WWWRootPath = "";
     }
 }

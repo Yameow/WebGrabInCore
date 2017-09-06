@@ -5,19 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using AngleSharp.Parser.Html;
 using WebGrabDemo.Common;
+using System.Text;
 
 namespace WebGrabDemo.Models
 {
     public class Btdytt520MoviceInfo
     {
-        private static MovieInfoHelper hotMoviceHelper = new MovieInfoHelper(Path.Combine(ConstsConf.WWWRootPath, "btdytt520HotMovice.json"));
+        private static MovieInfoHelper hotMoviceHelper = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "btdytt520HotMovice.json"));
 
         private static HtmlParser htmlParser = new HtmlParser();
 
         public static void CrawlHostMovieInfo()
         {
             var indexURL = "http://www.btdytt520.com/movie/";
-            var html = HTTPHelper.GetHTMLByURL(indexURL);
+            var html = RequestHelper.HttpGet(indexURL,Encoding.UTF8);
             if (string.IsNullOrEmpty(html))
                 return;
             var htmlDom = htmlParser.Parse(html);

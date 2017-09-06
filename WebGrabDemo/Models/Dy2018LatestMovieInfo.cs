@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AngleSharp.Parser.Html;
 using WebGrabDemo.Common;
+using System.Text;
 
 namespace WebGrabDemo.Models
 {
@@ -13,7 +14,7 @@ namespace WebGrabDemo.Models
     /// </summary>
     public class LatestMovieInfo
     {
-        private static MovieInfoHelper latestMovieList = new MovieInfoHelper(Path.Combine(ConstsConf.WWWRootPath, "latestMovie.json"));
+        private static MovieInfoHelper latestMovieList = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "latestMovie.json"));
 
         private static HtmlParser htmlParser = new HtmlParser();
 
@@ -60,8 +61,8 @@ namespace WebGrabDemo.Models
         /// <param name="i"></param>
         private static void FillMovieFromOnline(string indexURL)
         {
-           
-            var htmlDoc = HTTPHelper.GetHTMLByURL(indexURL);
+
+            var htmlDoc = RequestHelper.HttpGet(indexURL,Encoding.UTF8);
             var dom = htmlParser.Parse(htmlDoc);
             var lstDivInfo = dom.QuerySelectorAll("div.co_content8");
             if (lstDivInfo != null)
