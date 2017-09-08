@@ -117,32 +117,5 @@ namespace WebGrabDemo.Common
                 return null;
         }
 
-        /// <summary>
-        /// 写入json文件
-        /// </summary>
-        public void WriteToJsonFile(bool isWriteNow = false)
-        {
-            if (_cdMovieInfo.Count % 10 == 0 || isWriteNow)
-            {
-                using (var stream = new FileStream(_movieJsonFilePath, FileMode.OpenOrCreate))
-                {
-                    StreamWriter sw = new StreamWriter(stream);
-                    JsonSerializer serializer = new JsonSerializer
-                    {
-                        NullValueHandling = NullValueHandling.Ignore,
-                        Converters = { new JavaScriptDateTimeConverter() }
-                    };
-                    //构建Json.net的写入流  
-                    JsonWriter writer = new JsonTextWriter(sw);
-                    //把模型数据序列化并写入Json.net的JsonWriter流中  
-                    serializer.Serialize(writer, _cdMovieInfo.Values.OrderBy(m => m.PubDate).ToList());
-                    sw.Flush();
-                    writer.Close();
-
-                }
-            }
-        }
-
-
     }
 }
