@@ -15,39 +15,40 @@ namespace WebGrabDemo.Common
         /// <summary>
         /// 写入json文件
         /// </summary>
-        public static void WriteToJsonFile(ConcurrentDictionary<string, BaseFile> inputDic ,string filepath, bool isWriteNow = false)
+        public static void WriteToJsonFile<T>(List<T> inputList, string filepath) where T : BaseFile
         {
-            if (inputDic.Count % 10 == 0 || isWriteNow)
+            using (var stream = new FileStream(filepath, FileMode.OpenOrCreate))
             {
-                using (var stream = new FileStream(filepath, FileMode.OpenOrCreate))
-                {
-                    StreamWriter sw = new StreamWriter(stream);
-                    JsonSerializer serializer = new JsonSerializer
-                    {
-                        NullValueHandling = NullValueHandling.Ignore,
-                        Converters = { new JavaScriptDateTimeConverter() }
-                    };
-                    //构建Json.net的写入流  
-                    JsonWriter writer = new JsonTextWriter(sw);
-                    //把模型数据序列化并写入Json.net的JsonWriter流中  
-                    serializer.Serialize(writer, inputDic.Values.OrderBy(m => m.OrderDate).ToList());
-                    sw.Flush();
-                    writer.Close();
-                }
-            }
-        }
-
-        public static ConcurrentDictionary<string, BaseFile> ReadFromJsonFile(string filepath)
-        {
-            using (var stream = new FileStream(filepath, FileMode.Open))
-            {
-                StreamReader sw = new StreamReader(stream);
+                StreamWriter sw = new StreamWriter(stream);
                 JsonSerializer serializer = new JsonSerializer
                 {
                     NullValueHandling = NullValueHandling.Ignore,
                     Converters = { new JavaScriptDateTimeConverter() }
                 };
-                serializer.Deserialize();
+                //构建Json.net的写入流  
+                JsonWriter writer = new JsonTextWriter(sw);
+                //把模型数据序列化并写入Json.net的JsonWriter流中  
+                serializer.Serialize(writer, inputList.OrderBy(m => m.OrderField).ToList());
+                sw.Flush();
+                writer.Close();
+            }
+        }
+
+        public static List<K> ReadFromJsonFile<K>(string filepath) where K : BaseFile
+        {
+            using (var stream = new FileStream(filepath, FileMode.Open))
+            {
+                StreamReader sr = new StreamReader(stream);
+                using (var reader = new JsonTextReader(sr))
+                {
+                    JsonSerializer serializer = new JsonSerializer
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        Converters = { new JavaScriptDateTimeConverter() }
+                    };
+                    var list = serializer.Deserialize<List<K>>(reader);
+                    return list;
+                }
             }
         }
     }

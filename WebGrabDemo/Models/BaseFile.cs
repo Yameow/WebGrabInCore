@@ -7,6 +7,6 @@ namespace WebGrabDemo.Models
 {
     public class BaseFile
     {
-        public string OrderDate { get; set; }
+        public string OrderField { get; set; }
     }
 }

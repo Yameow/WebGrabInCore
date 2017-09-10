@@ -34,7 +34,7 @@ namespace WebGrabDemo.Common
 
         #region HttpGet
 
-        public static string HttpGet(string url, Encoding encoding, bool exceptionBackToUpper = true, int timeOut = 20000)
+        public static string HttpGet(string url, Encoding encoding, bool exceptionBackToUpper = true)
         {
             WebResponse response = null;
             WebRequest request = null;
@@ -45,7 +45,7 @@ namespace WebGrabDemo.Common
                 //request.ContentType = "text/html; charset=gb2312";
                 request.Method = "get";
                 request.UseDefaultCredentials = true;
-
+                
                 var task = request.GetResponseAsync();
                 WebResponse wResp = task.Result;
                 var respStream = wResp.GetResponseStream();

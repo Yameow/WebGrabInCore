@@ -85,9 +85,9 @@ namespace WebGrabDemo.Common
         /// <returns></returns>
         public bool AddToMovieDic(MovieInfo movieInfo)
         {
-            if (movieInfo != null && !_cdMovieInfo.ContainsKey(movieInfo.Dy2018OnlineUrl))
+            if (movieInfo != null && !_cdMovieInfo.ContainsKey(movieInfo.Dy2018OnlineUrl) && _cdMovieInfo.Count % 10 == 0)
             {
-                WriteToJsonFile();
+                FileHelper.WriteToJsonFile(_cdMovieInfo.Values.ToList(), _movieJsonFilePath);
                 LogHelper.Info("Add Movie Success!");
                 return _cdMovieInfo.TryAdd(movieInfo.Dy2018OnlineUrl, movieInfo);
             }

@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using AngleSharp.Parser.Html;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using WebGrabDemo.Models;
+
+namespace WebGrabDemo.Common
+{
+    public class PositionHelper
+    {
+        private ConcurrentDictionary<string, PositionInfo> _dicPositionInfo = new ConcurrentDictionary<string, PositionInfo>();
+
+        private string _positionFilePath = "";
+
+        /// <summary>
+        /// 初始化电影列表
+        /// </summary>
+        /// <param name="jsonFilePath">Json文件存放位置</param>
+        public PositionHelper(string jsonFilePath)
+        {
+            //先验证json文件是否存在
+            _positionFilePath = jsonFilePath;
+            try
+            {
+                if (!File.Exists(jsonFilePath))
+                {
+                    var pvFile = File.Create(jsonFilePath);
+                    pvFile.Flush();
+                    pvFile.Dispose();
+                    return;
+                }
+                var positionList = FileHelper.ReadFromJsonFile<PositionInfo>(jsonFilePath);
+
+                foreach (var position in positionList.GroupBy(m => m.PositionURL))
+                {
+                    if (!_dicPositionInfo.ContainsKey(position.Key))
+                        _dicPositionInfo.TryAdd(position.Key, position.FirstOrDefault());
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error("MovieInfoHelper Exception", ex);
+
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 获取当前的电影列表
+        /// </summary>
+        /// <returns></returns>
+        public List<PositionInfo> GetListPositionInfo()
+        {
+            return _dicPositionInfo.Values.OrderByDescending(m => m.OrderField).ToList();
+        }
+
+        /// <summary>
+        /// 添加到电影字典（线程安全）
+        /// </summary>
+        /// <param name="movieInfo"></param>
+        /// <returns></returns>
+        public bool AddToPositionDic(PositionInfo positionInfo)
+        {
+            if (positionInfo != null && !_dicPositionInfo.ContainsKey(positionInfo.PositionURL) && _dicPositionInfo.Count % 10 == 0)
+            {
+                FileHelper.WriteToJsonFile(_dicPositionInfo.Values.ToList(), _positionFilePath);
+                LogHelper.Info("Add Movie Success!");
+                return _dicPositionInfo.TryAdd(positionInfo.PositionURL, positionInfo);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 是否包含此电影
+        /// </summary>
+        /// <param name="onlieURL"></param>
+        /// <returns></returns>
+        public bool IsContainsPosition(string onlieURL)
+        {
+            return _dicPositionInfo.ContainsKey(onlieURL);
+        }
+
+        /// <summary>
+        /// 通过Key获取内存中的电影数据
+        /// </summary>
+        /// <param name="key">OnlineURL</param>
+        /// <returns></returns>
+        public PositionInfo GetPositionInfo(String key)
+        {
+            if (_dicPositionInfo.ContainsKey(key))
+                return _dicPositionInfo[key];
+            else
+
+                return null;
+        }
+    }
+}
