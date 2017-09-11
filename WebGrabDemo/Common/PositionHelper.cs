@@ -9,17 +9,18 @@ using AngleSharp.Parser.Html;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using WebGrabDemo.Models;
+using System.Text;
 
 namespace WebGrabDemo.Common
 {
     public class PositionHelper
     {
         private ConcurrentDictionary<string, PositionInfo> _dicPositionInfo = new ConcurrentDictionary<string, PositionInfo>();
-
+        private static HtmlParser htmlParser = new HtmlParser();
         private string _positionFilePath = "";
 
         /// <summary>
-        /// 初始化电影列表
+        /// 初始化职位列表
         /// </summary>
         /// <param name="jsonFilePath">Json文件存放位置</param>
         public PositionHelper(string jsonFilePath)
@@ -50,11 +51,8 @@ namespace WebGrabDemo.Common
             }
         }
 
-
-
-
         /// <summary>
-        /// 获取当前的电影列表
+        /// 获取当前的职位列表
         /// </summary>
         /// <returns></returns>
         public List<PositionInfo> GetListPositionInfo()
@@ -63,7 +61,7 @@ namespace WebGrabDemo.Common
         }
 
         /// <summary>
-        /// 添加到电影字典（线程安全）
+        /// 添加到职位字典
         /// </summary>
         /// <param name="movieInfo"></param>
         /// <returns></returns>
@@ -79,7 +77,7 @@ namespace WebGrabDemo.Common
         }
 
         /// <summary>
-        /// 是否包含此电影
+        /// 是否包含此职位
         /// </summary>
         /// <param name="onlieURL"></param>
         /// <returns></returns>
@@ -89,7 +87,7 @@ namespace WebGrabDemo.Common
         }
 
         /// <summary>
-        /// 通过Key获取内存中的电影数据
+        /// 通过Key获取内存中的职位数据
         /// </summary>
         /// <param name="key">OnlineURL</param>
         /// <returns></returns>
@@ -100,6 +98,48 @@ namespace WebGrabDemo.Common
             else
 
                 return null;
+        }
+
+        /// <summary>
+        /// 从在线网页提取职位详细数据
+        /// </summary>
+        /// <param name="onlineURL"></param>
+        /// <returns></returns>
+        public static PositionInfo GetPositionInfoFromOnlineURL(string onlineURL, bool isContainIntro = false)
+        {
+            try
+            {
+                var positionHTML = RequestHelper.HttpGet(onlineURL, Encoding.UTF8);
+                if (string.IsNullOrEmpty(positionHTML))
+                    return null;
+                var positionDoc = htmlParser.Parse(positionHTML);
+                var detail = positionDoc.GetElementsByClassName("details-left").FirstOrDefault();
+
+                var updatetime = detail.QuerySelector("div.job-intro").GetElementsByTagName("span").ToString().Split(' ').FirstOrDefault();
+                DateTime pubDate = default(DateTime);
+                if (updatetime != null && !string.IsNullOrEmpty(updatetime))
+                {
+                    DateTime.TryParse(updatetime, out pubDate);
+                }
+                var movieName = detail.QuerySelector("div.title_all");
+
+                var positionInfo = new PositionInfo()
+                {
+                    MovieName = movieName != null && movieName.QuerySelector("h1") != null ?
+                    movieName.QuerySelector("h1").InnerHtml : "找不到影片信息...",
+                    Dy2018OnlineUrl = onlineURL,
+                    MovieIntro = zoom != null && isContainIntro ? WebUtility.HtmlEncode(zoom.InnerHtml) : "暂无介绍...",
+                    XunLeiDownLoadURLList = lstOnlineURL,
+                    PubDate = pubDate,
+                };
+                return positionInfo;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error("GetMovieInfoFromOnlineURL Exception", ex, new { OnloneURL = onlineURL });
+                return null;
+            }
+
         }
     }
 }
