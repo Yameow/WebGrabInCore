@@ -115,22 +115,30 @@ namespace WebGrabDemo.Common
                 var positionDoc = htmlParser.Parse(positionHTML);
                 var detail = positionDoc.GetElementsByClassName("details-left").FirstOrDefault();
 
-                var updatetime = detail.QuerySelector("div.job-intro").GetElementsByTagName("span").ToString().Split(' ').FirstOrDefault();
+                var updatetime = detail.QuerySelector("div.job-intro").GetElementsByTagName("span").FirstOrDefault().InnerHtml.Split(' ').FirstOrDefault();
                 DateTime pubDate = default(DateTime);
                 if (updatetime != null && !string.IsNullOrEmpty(updatetime))
                 {
                     DateTime.TryParse(updatetime, out pubDate);
                 }
-                var movieName = detail.QuerySelector("div.title_all");
-
+                var positionName = detail.QuerySelector("div.job-intro").GetElementsByTagName("a").FirstOrDefault().InnerHtml;
+                var positionId = onlineURL.Split('/').LastOrDefault().Split('.').FirstOrDefault();
+                var positionDescription = detail.QuerySelector("div.intro-position").GetElementsByTagName("p").LastOrDefault().InnerHtml;
+                var positionDegree = detail.QuerySelector("div.intro-demond").GetElementsByTagName("p")[1].InnerHtml;
+                var positionCity = detail.QuerySelector("p.intro-divide").GetElementsByTagName("span")[1].InnerHtml;
+                var positionLevel = detail.QuerySelector("")
                 var positionInfo = new PositionInfo()
                 {
-                    MovieName = movieName != null && movieName.QuerySelector("h1") != null ?
-                    movieName.QuerySelector("h1").InnerHtml : "找不到影片信息...",
-                    Dy2018OnlineUrl = onlineURL,
-                    MovieIntro = zoom != null && isContainIntro ? WebUtility.HtmlEncode(zoom.InnerHtml) : "暂无介绍...",
-                    XunLeiDownLoadURLList = lstOnlineURL,
                     PubDate = pubDate,
+                    PositionId = positionId,
+                    PositionName = positionName,
+                    PositionURL = onlineURL,
+                    PositionDescription = positionDescription,
+                    PositionDegree = positionDegree,
+                    PositionCity = positionCity,
+                    PositoinType,
+                    PositionTag,
+                    PositionSalary
                 };
                 return positionInfo;
             }

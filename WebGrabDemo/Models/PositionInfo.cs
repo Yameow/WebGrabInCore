@@ -14,7 +14,6 @@ namespace WebGrabDemo.Models
         public string PositionDescription { get; set; }
         public string PositionDegree { get; set; }
         public string PositionCity { get; set; }
-        public string PositionLevel { get; set; }
         /// <summary>
         /// 全职or实习
         /// </summary>
