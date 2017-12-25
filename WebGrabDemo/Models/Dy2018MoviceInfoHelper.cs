@@ -37,7 +37,7 @@ namespace WebGrabDemo.Models
 
                 var movieName = movieDoc.QuerySelector("div.title_all");
 
-                var movieInfo = new MovieInfo()
+                var movieInfo = new WebGrabDemo.Models.MovieInfo()
                 {
                     MovieName = movieName != null && movieName.QuerySelector("h1") != null ?
                     movieName.QuerySelector("h1").InnerHtml : "找不到影片信息...",

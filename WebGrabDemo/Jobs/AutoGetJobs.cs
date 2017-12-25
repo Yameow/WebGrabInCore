@@ -1,16 +1,19 @@
-﻿using WebGrabDemo.Common;
+﻿using System.IO;
+using WebGrabDemo.Common;
 using WebGrabDemo.Models;
 
 namespace WebGrabDemo.Jobs
 {
     public class AutoGetJobs
     {
-        public static void Run()
+        public static void Run(string test)
         {
+            MovieInfoHelper hotMovieList = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "hotMovie.json"));
+
             LogHelper.Info("Start crawling");
-            LatestMovieInfo.CrawlLatestMovieInfo(10);
-            HotMovieInfo.CrawlHotMovie();
-            Btdytt520HotClickHelper.CrawlHotClickMovieInfo();
+            //LatestMovieInfo.CrawlLatestMovieInfo(10);
+            HotMovieInfo.CrawlHotMovie(hotMovieList);
+            //Btdytt520HotClickHelper.CrawlHotClickMovieInfo();
             LogHelper.Info("Finish crawling");
         }
     }

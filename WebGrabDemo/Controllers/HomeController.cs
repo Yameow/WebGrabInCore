@@ -64,7 +64,7 @@ namespace WebGrabDemo.Controllers
         public IActionResult RefreshMovie()
         {
             LatestMovieInfo.CrawlLatestMovieInfo();
-            HotMovieInfo.CrawlHotMovie();
+            //HotMovieInfo.CrawlHotMovie();
             return View();
         }
 

@@ -14,14 +14,10 @@ namespace WebGrabDemo.Models
     /// </summary>
     public class HotMovieInfo
     {
-        private static MovieInfoHelper hotMovieList = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "hotMovie.json"));
-
-        private static HtmlParser htmlParser = new HtmlParser();
-        
         /// <summary>
         /// 爬取数据
         /// </summary>
-        public static void CrawlHotMovie()
+        public static void CrawlHotMovie(MovieInfoHelper hotMovieList)
         {
             Task.Factory.StartNew(() =>
             {
@@ -29,7 +25,8 @@ namespace WebGrabDemo.Models
                 {
                     LogHelper.Info("CrawlHotMovie Start...");
                     var htmlDoc = RequestHelper.HttpGet("http://www.dy2018.com/", Encoding.GetEncoding("GB2312"));
-                    var dom = htmlParser.Parse(htmlDoc);
+                    HtmlParser parser = new HtmlParser();                    
+                    var dom = parser.Parse(htmlDoc);
                     var lstDivInfo = dom.QuerySelectorAll("div.co_content222");
                     if (lstDivInfo != null)
                     {
@@ -66,14 +63,16 @@ namespace WebGrabDemo.Models
         /// <returns></returns>
         public static List<MovieInfo> GetAllMovieInfo()
         {
-            return hotMovieList.GetListMoveInfo(); ;
+            //return hotMovieList.GetListMoveInfo(); ;
+            return null;
         }
 
 
 
         public static MovieInfo GetMovieInfoByOnlineURL(string onlineURL)
         {
-            return hotMovieList.GetMovieInfo(onlineURL);
+            //return hotMovieList.GetMovieInfo(onlineURL);
+            return null;
         }
     }
 }

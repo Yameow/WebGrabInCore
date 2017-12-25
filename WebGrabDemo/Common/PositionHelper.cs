@@ -126,7 +126,11 @@ namespace WebGrabDemo.Common
                 var positionDescription = detail.QuerySelector("div.intro-position").GetElementsByTagName("p").LastOrDefault().InnerHtml;
                 var positionDegree = detail.QuerySelector("div.intro-demond").GetElementsByTagName("p")[1].InnerHtml;
                 var positionCity = detail.QuerySelector("p.intro-divide").GetElementsByTagName("span")[1].InnerHtml;
-                var positionLevel = detail.QuerySelector("")
+                var positionLevel = detail.QuerySelector("");
+                var positionType = detail.QuerySelector("p.intro-divide").GetElementsByTagName("span")[0].InnerHtml;
+                var positionTags = detail.QuerySelector("p.intro-icon").GetElementsByTagName("span").Select(o=>o.InnerHtml);
+                var positionTag = string.Join(",", positionTags);
+                var positionSalary = detail.QuerySelector("p.intro-divide").GetElementsByTagName("span")[2].InnerHtml;
                 var positionInfo = new PositionInfo()
                 {
                     PubDate = pubDate,
@@ -136,15 +140,15 @@ namespace WebGrabDemo.Common
                     PositionDescription = positionDescription,
                     PositionDegree = positionDegree,
                     PositionCity = positionCity,
-                    PositoinType,
-                    PositionTag,
-                    PositionSalary
+                    PositoinType = positionType,
+                    PositionTag = positionTag,
+                    PositionSalary = positionSalary
                 };
                 return positionInfo;
             }
             catch (Exception ex)
             {
-                LogHelper.Error("GetMovieInfoFromOnlineURL Exception", ex, new { OnloneURL = onlineURL });
+                LogHelper.Error("GetPositionInfoFromOnlineURL Exception", ex, new { OnloneURL = onlineURL });
                 return null;
             }
 

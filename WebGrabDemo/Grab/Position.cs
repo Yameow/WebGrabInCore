@@ -70,9 +70,9 @@ namespace WebGrabDemo.Grab
                     var onlineURL = a.GetAttribute("href");
                     if (!positionNewList.IsContainsPosition(onlineURL))
                     {
-                        PositionInfo movieInfo = PositionHelper.GetPositionInfoFromOnlineURL(onlineURL);
-                        if (movieInfo != null && movieInfo.XunLeiDownLoadURLList != null && movieInfo.XunLeiDownLoadURLList.Count != 0)
-                            latestMovieList.AddToMovieDic(movieInfo);
+                        PositionInfo positionInfo = PositionHelper.GetPositionInfoFromOnlineURL(onlineURL);
+                        if (positionInfo != null)
+                            positionNewList.AddToPositionDic(positionInfo);
                     }
                 });
             }

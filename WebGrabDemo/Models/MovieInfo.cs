@@ -8,7 +8,7 @@ namespace WebGrabDemo.Models
 {
     public class MovieInfo : BaseFile
     {
-        private DateTime pubDate;
+       
         public string MovieName { get; set; }
 
         public string Dy2018OnlineUrl { get; set; }
@@ -16,13 +16,7 @@ namespace WebGrabDemo.Models
         [JsonIgnoreAttribute]
         public string MovieIntro { get; set; }
 
-        public DateTime PubDate {
-            get { return pubDate; }
-            set {
-                PubDate = pubDate;
-                base.OrderField = pubDate.ToString();
-            }
-        }
+        public DateTime PubDate { get; set; }
 
         public List<string> XunLeiDownLoadURLList { get; set; }
 
