@@ -85,7 +85,8 @@ namespace WebGrabDemo.Common
         /// <returns></returns>
         public bool AddToMovieDic(MovieInfo movieInfo)
         {
-            if (movieInfo != null && !_cdMovieInfo.ContainsKey(movieInfo.Dy2018OnlineUrl) && _cdMovieInfo.Count % 10 == 0)
+            //TODO这里可以实现批量插入
+            if (movieInfo != null && !_cdMovieInfo.ContainsKey(movieInfo.Dy2018OnlineUrl))
             {
                 FileHelper.WriteToJsonFile(_cdMovieInfo.Values.ToList(), _movieJsonFilePath);
                 LogHelper.Info("Add Movie Success!");

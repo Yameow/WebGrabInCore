@@ -9,6 +9,7 @@ namespace WebGrabDemo.Controllers
 {
     public class HomeController : Controller
     {
+
         /// <summary>
         /// 首页
         /// </summary>
@@ -16,7 +17,7 @@ namespace WebGrabDemo.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            List<MovieInfo> lstMovie = HotMovieInfo.GetAllMovieInfo();
+            List<MovieInfo> lstMovie = Program.hotMovieList.GetListMoveInfo();
             return View(lstMovie);
         }
 

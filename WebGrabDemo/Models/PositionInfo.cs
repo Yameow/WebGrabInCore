@@ -25,7 +25,7 @@ namespace WebGrabDemo.Models
             get { return pubDate; }
             set
             {
-                PubDate = pubDate;
+                pubDate = value;
                 base.OrderField = pubDate.ToString();
             }
         }

@@ -61,10 +61,9 @@ namespace WebGrabDemo.Models
         /// 获取全部的电影数据
         /// </summary>
         /// <returns></returns>
-        public static List<MovieInfo> GetAllMovieInfo()
+        public static List<MovieInfo> GetAllMovieInfo(MovieInfoHelper hotMovieList)
         {
-            //return hotMovieList.GetListMoveInfo(); ;
-            return null;
+            return hotMovieList.GetListMoveInfo();
         }
 
 

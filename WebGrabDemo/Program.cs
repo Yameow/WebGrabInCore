@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using WebGrabDemo.Common;
 
 namespace WebGrabDemo
 {
@@ -16,10 +17,12 @@ namespace WebGrabDemo
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
+                .UseApplicationInsights()                
                 .Build();
 
             host.Run();
         }
+
+        public static MovieInfoHelper hotMovieList = new MovieInfoHelper(Path.Combine(GlobalConfig.WWWRootPath, "hotMovie.json"));
     }
 }

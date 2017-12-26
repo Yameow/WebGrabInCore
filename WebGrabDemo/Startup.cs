@@ -47,7 +47,7 @@ namespace WebGrabDemo
 
             app.UseHangfireServer();
             app.UseHangfireDashboard();
-            RecurringJob.AddOrUpdate(() => AutoGetJobs.Run("test"), Cron.Minutely());
+            RecurringJob.AddOrUpdate(() => AutoGetJobs.Run(), Cron.Minutely());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -94,13 +94,14 @@ namespace WebGrabDemo
             //        return context.Response.WriteAsync("ok");
             //    });
             //});
-
+            
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             GlobalConfig.WWWRootPath = env.WebRootPath;
 
             //RecurringJob.AddOrUpdate(() => Console.WriteLine("test!  " + DateTime.Now), Cron.Minutely());
 
         }
+
 
         //public static async Task TestAsync()
         //{
