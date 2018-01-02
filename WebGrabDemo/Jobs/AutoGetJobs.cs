@@ -11,7 +11,7 @@ namespace WebGrabDemo.Jobs
         {
             LogHelper.Info("Start crawling");
             //MovieService.GrabHotMovie();
-            PositionService.GrabPositionInfo();
+            PositionService.GrabPositionInfo(100);
             LogHelper.Info("Finish crawling");
         }
     }

@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace WebGrabDemo.Models
 {
-    public class MovieInfo : BaseFile
+    public class QDailyInfo:BaseFile
     {
         private DateTime pubDate { get; set; }
-        public string MovieName { get; set; }
+        public string ArticleName { get; set; }
 
-        public string Dy2018OnlineUrl { get; set; }
+        public string OriginalUrl { get; set; }
 
         [JsonIgnoreAttribute]
-        public string MovieIntro { get; set; }
+        public string ArticleContent { get; set; }
 
         public DateTime PubDate
         {
@@ -25,8 +25,5 @@ namespace WebGrabDemo.Models
                 base.OrderField = pubDate.ToString();
             }
         }
-
-        public List<string> XunLeiDownLoadUrlList { get; set; }
-
     }
 }
