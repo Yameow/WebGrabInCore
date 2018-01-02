@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using WebGrabDemo.Common;
 using WebGrabDemo.Models;
+using WebGrabDemo.Service;
 
 namespace WebGrabDemo.Jobs
 {
@@ -8,12 +9,8 @@ namespace WebGrabDemo.Jobs
     {
         public static void Run()
         {
-
-
             LogHelper.Info("Start crawling");
-            //LatestMovieInfo.CrawlLatestMovieInfo(10);
-            HotMovieInfo.CrawlHotMovie(Program.hotMovieList);
-            //Btdytt520HotClickHelper.CrawlHotClickMovieInfo();
+            MovieService.GrabHotMovie();
             LogHelper.Info("Finish crawling");
         }
     }

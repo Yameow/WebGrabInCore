@@ -26,7 +26,7 @@ namespace WebGrabDemo.Models
             }
         }    
 
-    public List<string> XunLeiDownLoadURLList { get; set; }
+    public List<string> XunLeiDownLoadUrlList { get; set; }
 
     }
 }

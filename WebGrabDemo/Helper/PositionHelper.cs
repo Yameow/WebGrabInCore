@@ -1,17 +1,14 @@
-﻿using System;
+﻿using AngleSharp.Parser.Html;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using AngleSharp.Parser.Html;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using WebGrabDemo.Models;
 using System.Text;
+using WebGrabDemo.Common;
+using WebGrabDemo.Models;
 
-namespace WebGrabDemo.Common
+namespace WebGrabDemo.Helper
 {
     public class PositionHelper
     {

@@ -9,17 +9,16 @@ using AngleSharp.Parser.Html;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using WebGrabDemo.Models;
+using WebGrabDemo.Common;
 
-namespace WebGrabDemo.Common
+namespace WebGrabDemo.Helper
 {
     public class MovieInfoHelper
     {
 
         private ConcurrentDictionary<string, MovieInfo> _cdMovieInfo = new ConcurrentDictionary<string, MovieInfo>();
 
-
         private string _movieJsonFilePath = "";
-
 
         /// <summary>
         /// 初始化电影列表
@@ -34,7 +33,6 @@ namespace WebGrabDemo.Common
                 pvFile.Flush();
                 pvFile.Dispose();
                 return;
-
             }
             using (var stream = new FileStream(jsonFilePath, FileMode.OpenOrCreate))
             {
@@ -56,17 +54,12 @@ namespace WebGrabDemo.Common
                                 _cdMovieInfo.TryAdd(movie.Key, movie.FirstOrDefault());
                         }
                     }
-
-
                 }
                 catch (Exception ex)
                 {
                     LogHelper.Error("MovieInfoHelper Exception", ex);
-
                 }
             }
-
-
         }
 
         /// <summary>
@@ -100,9 +93,9 @@ namespace WebGrabDemo.Common
         /// </summary>
         /// <param name="onlieURL"></param>
         /// <returns></returns>
-        public bool IsContainsMoive(string onlieURL)
+        public bool IsContainsMoive(string onlieUrl)
         {
-            return _cdMovieInfo.ContainsKey(onlieURL);
+            return _cdMovieInfo.ContainsKey(onlieUrl);
         }
 
         /// <summary>

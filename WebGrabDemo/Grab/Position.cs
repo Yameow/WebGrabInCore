@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebGrabDemo.Common;
+using WebGrabDemo.Helper;
 using WebGrabDemo.Models;
 
 namespace WebGrabDemo.Grab
@@ -56,10 +57,10 @@ namespace WebGrabDemo.Grab
         /// 从在线网页提取数据
         /// </summary>
         /// <param name="i"></param>
-        private static void GrabPositionElement(string indexURL)
+        private static void GrabPositionElement(string indexUrl)
         {
 
-            var htmlDoc = RequestHelper.HttpGet(indexURL, Encoding.UTF8);
+            var htmlDoc = RequestHelper.HttpGet(indexUrl, Encoding.UTF8);
             var dom = htmlParser.Parse(htmlDoc);
             var lstDivInfo = dom.QuerySelectorAll("ul.left-result");
             if (lstDivInfo != null)
@@ -77,7 +78,6 @@ namespace WebGrabDemo.Grab
                 });
             }
         }
-
 
         /// <summary>
         /// 获取全部的电影数据

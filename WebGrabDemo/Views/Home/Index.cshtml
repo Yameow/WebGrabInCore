@@ -19,12 +19,12 @@
         <ul>
            @foreach (var movie in Model)
            {
-                <li><a href="@movie.XunLeiDownLoadURLList.FirstOrDefault(item => item.Contains("ftp"))" 
+                <li><a href="@movie.XunLeiDownLoadUrlList.FirstOrDefault(item => item.Contains("ftp"))" 
                        target="_blank">@{ 
-                           var downloadURL = movie.XunLeiDownLoadURLList.FirstOrDefault(item => item.Contains("ftp"));
+                           var downloadURL = movie.XunLeiDownLoadUrlList.FirstOrDefault(item => item.Contains("ftp"));
                            if (String.IsNullOrEmpty(downloadURL))
                            {
-                              <span>@movie.XunLeiDownLoadURLList.FirstOrDefault()</span>
+                              <span>@movie.XunLeiDownLoadUrlList.FirstOrDefault()</span>
 
                            }
                            else
