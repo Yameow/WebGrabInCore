@@ -23,10 +23,22 @@ namespace WebGrabDemo.Controllers
             return View(lstMovie);
         }
 
+        public IActionResult PositionIndex()
+        {
+            List<PositionInfo> lstPosition = PositionService.GetAllPositionInfo();
+            return View(lstPosition);
+        }
+
         public IActionResult ShowMoiveDetail(string onlineURL)
         {
             var movieInfo = MovieService.GetMovieInfoFromOnlineUrl(onlineURL, true);
             return View(movieInfo);
+        }
+
+        public IActionResult ShowPositionDetail(string onlineURL)
+        {
+            var positionInfo = PositionService.GetPositionInfoByOnlineURL(onlineURL);
+            return View(positionInfo);
         }
 
         public IActionResult Error()

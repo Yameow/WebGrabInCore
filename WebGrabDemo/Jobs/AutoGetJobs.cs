@@ -10,7 +10,8 @@ namespace WebGrabDemo.Jobs
         public static void Run()
         {
             LogHelper.Info("Start crawling");
-            MovieService.GrabHotMovie();
+            //MovieService.GrabHotMovie();
+            PositionService.GrabPositionInfo();
             LogHelper.Info("Finish crawling");
         }
     }
