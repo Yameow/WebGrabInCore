@@ -75,6 +75,16 @@ namespace WebGrabDemo.Common
             }
         }
 
+        public static void HttpGet(string url)
+        {
+            WebRequest request = null;
+            request = WebRequest.Create(url);
+            //request.ContentType = "text/html; charset=gb2312";
+            request.Method = "get";
+            request.UseDefaultCredentials = true;
+            request.GetResponseAsync();
+            request = null;
+        }
 
         //public static string HttpGet(string url, Encoding encoding, CookieCollection cookie, bool exceptionBackToUpper = true, int timeOut = 20000)
         //{
