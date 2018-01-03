@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "QDaily";
+}
+@model List<WebGrabDemo.Models.QDailyInfo>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>QDaily List</h2>
+        <ul>
+            @foreach (var qDaily in Model)
+            {
+                <li><a href="@(Url.Action("ShowQDailyDetail")+"?onlineURL="+@qDaily.OriginalUrl)" target="_blank">@qDaily.ArticleName</a></li>
+                <li>
+                    @Html.Raw(qDaily.ArticleContent)
+                </li>
+                <br />
+            }
+        </ul>
+    </div>
+</div>

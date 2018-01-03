@@ -29,6 +29,12 @@ namespace WebGrabDemo.Controllers
             return View(lstPosition);
         }
 
+        public IActionResult QDailyIndex()
+        {
+            List<QDailyInfo> lstQDaily = QDailyService.GetAllQDailyInfo();
+            return View(lstQDaily);
+        }
+
         public IActionResult ShowMoiveDetail(string onlineURL)
         {
             var movieInfo = MovieService.GetMovieInfoFromOnlineUrl(onlineURL, true);
@@ -39,6 +45,12 @@ namespace WebGrabDemo.Controllers
         {
             var positionInfo = PositionService.GetPositionInfoByOnlineURL(onlineURL);
             return View(positionInfo);
+        }
+
+        public IActionResult ShowQDailyDetail(string onlineURL)
+        {
+            var qDailyInfo = QDailyService.GetQDailyInfoByOnlineUrl(onlineURL);
+            return View(qDailyInfo);
         }
 
         public IActionResult Error()

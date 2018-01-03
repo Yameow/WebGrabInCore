@@ -12,8 +12,8 @@ namespace WebGrabDemo.Models
         public string ArticleName { get; set; }
 
         public string OriginalUrl { get; set; }
+        public int QDailyId { get; set; }
 
-        [JsonIgnoreAttribute]
         public string ArticleContent { get; set; }
 
         public DateTime PubDate
