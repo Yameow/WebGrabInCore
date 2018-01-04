@@ -13,8 +13,13 @@ namespace WebGrabDemo.Jobs
             //MovieService.GrabHotMovie();
             //PositionService.GrabPositionInfo(100);
             //QDailyService.GrabIQDailynfo();
-            PingService.GrabIQDailynfo();
+            var ping  = new PingService();
+
+            ping.PingWebsite(times);
+            //PingService.PingWebsite();
             LogHelper.Info("Finish crawling");
         }
+
+        public static int times = 0;
     }
 }

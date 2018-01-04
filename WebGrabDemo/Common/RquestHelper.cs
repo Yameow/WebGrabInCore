@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -82,9 +83,10 @@ namespace WebGrabDemo.Common
             //request.ContentType = "text/html; charset=gb2312";
             request.Method = "get";
             request.UseDefaultCredentials = true;
-            request.GetResponseAsync();
+            request.GetResponseAsync();            
             request = null;
         }
+
 
         //public static string HttpGet(string url, Encoding encoding, CookieCollection cookie, bool exceptionBackToUpper = true, int timeOut = 20000)
         //{
